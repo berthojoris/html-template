@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flowkit Dashboard</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+    />
+    <style>
+      :root {
+        --bg: #f5f7fb;
+        --white: #ffffff;
+        --card-border: #e8ecf5;
+        --text-primary: #1a1d2b;
+        --text-secondary: #6e7891;
+        --accent: #3f8cff;
+        --success: #4ad991;
+        --warning: #ffcc70;
+        --danger: #ff6c6c;
+        --nav-width: 260px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: 'Inter', sans-serif;
+        background-color: var(--bg);
+        color: var(--text-primary);
+      }
+
+      .dashboard {
+        min-height: 100vh;
+        display: grid;
+        grid-template-columns: var(--nav-width) 1fr;
+      }
+
+      .sidebar {
+        background: var(--white);
+        border-right: 1px solid var(--card-border);
+        padding: 24px 18px;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-weight: 700;
+        font-size: 18px;
+      }
+
+      .logo-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #4ad991, #3f8cff);
+        display: grid;
+        place-items: center;
+        color: var(--white);
+        font-size: 20px;
+      }
+
+      .sidebar-section {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .sidebar-title {
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--text-secondary);
+        font-weight: 600;
+        margin-bottom: 12px;
+      }
+
+      .nav-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 12px;
+        border-radius: 10px;
+        font-size: 14px;
+        color: var(--text-secondary);
+        font-weight: 500;
+        cursor: pointer;
+        transition: background 0.2s, color 0.2s;
+      }
+
+      .nav-item:hover,
+      .nav-item.active {
+        background: rgba(63, 140, 255, 0.1);
+        color: var(--accent);
+      }
+
+      .nav-item i {
+        font-size: 20px;
+      }
+
+      .accordion {
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1px solid var(--card-border);
+        background: var(--white);
+      }
+
+      .accordion-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 16px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--text-primary);
+      }
+
+      .accordion-header i {
+        transition: transform 0.2s ease;
+      }
+
+      .accordion-content {
+        display: grid;
+        gap: 6px;
+        padding: 0 16px 12px;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.25s ease;
+      }
+
+      .accordion.open .accordion-content {
+        padding-top: 6px;
+      }
+
+      .accordion.open .accordion-header i {
+        transform: rotate(180deg);
+      }
+
+      .accordion.open .accordion-content {
+        max-height: 200px;
+      }
+
+      main {
+        padding: 28px 32px;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+      }
+
+      .top-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .breadcrumbs {
+        font-size: 13px;
+        color: var(--text-secondary);
+      }
+
+      .top-actions {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+
+      .search {
+        position: relative;
+      }
+
+      .search input {
+        padding: 10px 36px 10px 12px;
+        border-radius: 12px;
+        border: 1px solid var(--card-border);
+        font-size: 14px;
+        background: var(--white);
+      }
+
+      .search i {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-secondary);
+        font-size: 18px;
+      }
+
+      .user-card {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        background: var(--white);
+        border-radius: 16px;
+        padding: 8px 14px;
+        border: 1px solid var(--card-border);
+      }
+
+      .avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 12px;
+        background: #f6f9ff;
+        display: grid;
+        place-items: center;
+        font-weight: 600;
+        color: var(--accent);
+      }
+
+      .user-info {
+        display: flex;
+        flex-direction: column;
+        font-size: 12px;
+      }
+
+      .user-info span:first-child {
+        font-weight: 600;
+        color: var(--text-primary);
+      }
+
+      .user-info span:last-child {
+        color: var(--text-secondary);
+      }
+
+      .cards-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 20px;
+      }
+
+      .card {
+        background: var(--white);
+        border-radius: 16px;
+        border: 1px solid var(--card-border);
+        padding: 18px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .card h3 {
+        margin: 0;
+        font-size: 13px;
+        color: var(--text-secondary);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+      }
+
+      .card .metric {
+        font-size: 26px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 8px;
+        border-radius: 10px;
+        font-size: 11px;
+        font-weight: 600;
+      }
+
+      .badge i {
+        font-size: 14px;
+      }
+
+      .badge.up {
+        background: rgba(74, 217, 145, 0.12);
+        color: var(--success);
+      }
+
+      .badge.down {
+        background: rgba(255, 108, 108, 0.12);
+        color: var(--danger);
+      }
+
+      .layout-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 20px;
+      }
+
+      .chart-card {
+        height: 320px;
+      }
+
+      .chart-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .chart-header h4 {
+        margin: 0;
+        font-size: 16px;
+        font-weight: 600;
+      }
+
+      .chart-legend {
+        display: flex;
+        gap: 16px;
+        font-size: 12px;
+        color: var(--text-secondary);
+      }
+
+      .chart-legend span::before {
+        content: '';
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 6px;
+      }
+
+      .legend-green::before {
+        background: #4ad991;
+      }
+
+      .legend-blue::before {
+        background: #3f8cff;
+      }
+
+      .legend-yellow::before {
+        background: #ffcc70;
+      }
+
+      .mini-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 20px;
+      }
+
+      .table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .table td {
+        padding: 10px 0;
+        border-bottom: 1px solid var(--card-border);
+        font-size: 13px;
+        color: var(--text-secondary);
+      }
+
+      .table td:first-child {
+        color: var(--text-primary);
+        font-weight: 600;
+      }
+
+      .progress-bar {
+        position: relative;
+        height: 8px;
+        border-radius: 999px;
+        background: #eef1f9;
+        overflow: hidden;
+      }
+
+      .progress-bar span {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        border-radius: inherit;
+      }
+
+      .progress-blue {
+        background: var(--accent);
+      }
+
+      .progress-green {
+        background: var(--success);
+      }
+
+      .progress-yellow {
+        background: var(--warning);
+      }
+
+      .activity-summary {
+        display: flex;
+        justify-content: space-between;
+        font-size: 12px;
+        color: var(--text-secondary);
+      }
+
+      footer {
+        margin-top: auto;
+        font-size: 12px;
+        color: var(--text-secondary);
+        text-align: center;
+        padding-top: 12px;
+        border-top: 1px solid var(--card-border);
+      }
+
+      @media (max-width: 1200px) {
+        .dashboard {
+          grid-template-columns: 220px 1fr;
+        }
+
+        .cards-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .layout-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 900px) {
+        .dashboard {
+          grid-template-columns: 1fr;
+        }
+
+        .sidebar {
+          flex-direction: row;
+          overflow-x: auto;
+          position: sticky;
+          top: 0;
+          z-index: 10;
+        }
+
+        main {
+          padding: 20px;
+        }
+      }
+
+      @media (max-width: 600px) {
+        .cards-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .mini-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .top-bar {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 16px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="dashboard">
+      <aside class="sidebar">
+        <div class="logo">
+          <div class="logo-icon"><i class='bx bx-pie-chart-alt'></i></div>
+          Flowkit
+        </div>
+        <div class="sidebar-section">
+          <div class="sidebar-title">Analytics</div>
+          <div class="nav-item active"><i class='bx bx-grid-alt'></i> Dashboard</div>
+          <div class="nav-item"><i class='bx bx-shape-circle'></i> NFT</div>
+          <div class="nav-item"><i class='bx bx-store-alt'></i> eCommerce</div>
+          <div class="nav-item"><i class='bx bx-briefcase'></i> CRM</div>
+        </div>
+        <div class="sidebar-section">
+          <div class="sidebar-title">Management</div>
+          <div class="nav-item"><i class='bx bx-calendar-event'></i> Calendar</div>
+          <div class="nav-item"><i class='bx bx-chat'></i> Chat</div>
+          <div class="nav-item"><i class='bx bx-envelope'></i> Mail</div>
+          <div class="nav-item"><i class='bx bx-folder'></i> File Manager</div>
+        </div>
+        <div class="accordion" id="integrations">
+          <div class="accordion-header">
+            Integrations
+            <i class='bx bx-chevron-down'></i>
+          </div>
+          <div class="accordion-content">
+            <div class="nav-item"><i class='bx bxl-slack'></i> Slack</div>
+            <div class="nav-item"><i class='bx bxl-figma'></i> Figma</div>
+            <div class="nav-item"><i class='bx bxl-dribbble'></i> Dribbble</div>
+          </div>
+        </div>
+        <div class="accordion" id="settings">
+          <div class="accordion-header">
+            Settings
+            <i class='bx bx-chevron-down'></i>
+          </div>
+          <div class="accordion-content">
+            <div class="nav-item"><i class='bx bx-cog'></i> General</div>
+            <div class="nav-item"><i class='bx bx-lock-alt'></i> Security</div>
+            <div class="nav-item"><i class='bx bx-paint'></i> Appearance</div>
+          </div>
+        </div>
+        <footer>© 2024 Flowkit. All rights reserved.</footer>
+      </aside>
+      <main>
+        <div class="top-bar">
+          <div>
+            <div class="breadcrumbs">Flowkit / Analytics</div>
+            <h1>Dashboard</h1>
+          </div>
+          <div class="top-actions">
+            <div class="search">
+              <input type="text" placeholder="Search" />
+              <i class='bx bx-search'></i>
+            </div>
+            <i class='bx bx-bell' style="font-size: 22px; color: var(--text-secondary);"></i>
+            <div class="user-card">
+              <div class="avatar">T</div>
+              <div class="user-info">
+                <span>Tyler</span>
+                <span>UI Designer</span>
+              </div>
+              <i class='bx bx-chevron-down' style="color: var(--text-secondary);"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="cards-grid">
+          <div class="card">
+            <h3>Visitor</h3>
+            <div class="metric">9,000</div>
+            <div class="badge up"><i class='bx bx-up-arrow-alt'></i> 13% from previous month</div>
+          </div>
+          <div class="card">
+            <h3>Unique Visitor</h3>
+            <div class="metric">3,482</div>
+            <div class="badge up"><i class='bx bx-up-arrow-alt'></i> 8% from previous month</div>
+          </div>
+          <div class="card">
+            <h3>Avg Visit Duration</h3>
+            <div class="metric">2m 56s</div>
+            <div class="badge down"><i class='bx bx-down-arrow-alt'></i> 4% from previous month</div>
+          </div>
+          <div class="card">
+            <h3>Pages per visit</h3>
+            <div class="metric">2.41</div>
+            <div class="badge up"><i class='bx bx-up-arrow-alt'></i> 6% from previous month</div>
+          </div>
+        </div>
+
+        <div class="layout-grid">
+          <div class="card chart-card">
+            <div class="chart-header">
+              <h4>Activity on the pages</h4>
+              <div class="chart-legend">
+                <span class="legend-green">Sessions</span>
+                <span class="legend-blue">Visitors</span>
+              </div>
+            </div>
+            <canvas id="pagesChart"></canvas>
+            <div class="activity-summary">
+              <span>Last updated: 2 minutes ago</span>
+              <span>+18% this quarter</span>
+            </div>
+          </div>
+          <div class="card chart-card">
+            <div class="chart-header">
+              <h4>Response time by location</h4>
+              <div class="chart-legend">
+                <span class="legend-blue">Average</span>
+              </div>
+            </div>
+            <canvas id="responseChart"></canvas>
+          </div>
+        </div>
+
+        <div class="mini-grid">
+          <div class="card">
+            <div class="chart-header">
+              <h4>Most active user</h4>
+            </div>
+            <table class="table">
+              <tbody>
+                <tr>
+                  <td>Johan</td>
+                  <td>johan@email.com</td>
+                </tr>
+                <tr>
+                  <td>Alexandra</td>
+                  <td>alexandra@email.com</td>
+                </tr>
+                <tr>
+                  <td>Smith</td>
+                  <td>smith@email.com</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="card">
+            <div class="chart-header">
+              <h4>Visitor by Country</h4>
+            </div>
+            <table class="table">
+              <tbody>
+                <tr>
+                  <td>United States</td>
+                  <td>9,500</td>
+                </tr>
+                <tr>
+                  <td>Argentina</td>
+                  <td>6,200</td>
+                </tr>
+                <tr>
+                  <td>Germany</td>
+                  <td>4,900</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="layout-grid">
+          <div class="card chart-card">
+            <div class="chart-header">
+              <h4>Traffic Sources</h4>
+              <div class="chart-legend">
+                <span class="legend-blue">Sessions</span>
+              </div>
+            </div>
+            <table class="table">
+              <tbody>
+                <tr>
+                  <td>Chrome</td>
+                  <td>9500</td>
+                </tr>
+                <tr>
+                  <td>Safari</td>
+                  <td>8000</td>
+                </tr>
+                <tr>
+                  <td>Firefox</td>
+                  <td>6200</td>
+                </tr>
+                <tr>
+                  <td>Edge</td>
+                  <td>5800</td>
+                </tr>
+                <tr>
+                  <td>Opera</td>
+                  <td>4600</td>
+                </tr>
+                <tr>
+                  <td>Mozilla</td>
+                  <td>3400</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="card chart-card">
+            <div class="chart-header">
+              <h4>Audience Overview</h4>
+              <div class="chart-legend">
+                <span class="legend-blue">Sessions</span>
+                <span class="legend-yellow">New Users</span>
+              </div>
+            </div>
+            <canvas id="audienceChart"></canvas>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script>
+      const accordionHeaders = document.querySelectorAll('.accordion-header');
+
+      accordionHeaders.forEach((header) => {
+        header.addEventListener('click', () => {
+          const accordion = header.parentElement;
+          accordion.classList.toggle('open');
+        });
+      });
+
+      const pagesCtx = document.getElementById('pagesChart');
+      const responseCtx = document.getElementById('responseChart');
+      const audienceCtx = document.getElementById('audienceChart');
+
+      new Chart(pagesCtx, {
+        type: 'bar',
+        data: {
+          labels: ['2017', '2018', '2019', '2020', '2021', '2022', '2023'],
+          datasets: [
+            {
+              label: 'Sessions',
+              data: [3200, 4100, 4800, 4200, 5200, 6100, 6800],
+              backgroundColor: '#4ad991',
+              borderRadius: 8,
+              maxBarThickness: 30
+            },
+            {
+              label: 'Visitors',
+              data: [2800, 3500, 4200, 3700, 4600, 5400, 6000],
+              backgroundColor: '#3f8cff',
+              borderRadius: 8,
+              maxBarThickness: 30
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              backgroundColor: '#1a1d2b',
+              titleFont: { weight: '600' },
+              padding: 12,
+              cornerRadius: 8
+            }
+          },
+          scales: {
+            x: {
+              stacked: false,
+              grid: { display: false }
+            },
+            y: {
+              beginAtZero: true,
+              ticks: {
+                stepSize: 1000
+              },
+              grid: {
+                color: '#eef1f9'
+              }
+            }
+          }
+        }
+      });
+
+      new Chart(responseCtx, {
+        type: 'pie',
+        data: {
+          labels: ['USA', 'Argentina', 'Germany', 'India'],
+          datasets: [
+            {
+              label: 'Response time',
+              data: [32, 26, 22, 20],
+              backgroundColor: ['#3f8cff', '#4ad991', '#ffcc70', '#ff6c6c'],
+              borderWidth: 0
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: {
+                usePointStyle: true,
+                pointStyle: 'circle'
+              }
+            }
+          }
+        }
+      });
+
+      new Chart(audienceCtx, {
+        type: 'bar',
+        data: {
+          labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+          datasets: [
+            {
+              label: 'Sessions',
+              data: [6200, 5400, 7200, 6800, 7500, 6300, 5800],
+              backgroundColor: '#3f8cff',
+              borderRadius: 8,
+              barThickness: 18
+            },
+            {
+              type: 'line',
+              label: 'New Users',
+              data: [3200, 3000, 3600, 3400, 3800, 3300, 3100],
+              borderColor: '#ffcc70',
+              tension: 0.4,
+              fill: false,
+              pointBackgroundColor: '#ffcc70',
+              pointRadius: 4
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false }
+          },
+          scales: {
+            x: {
+              grid: { display: false }
+            },
+            y: {
+              beginAtZero: true,
+              ticks: {
+                stepSize: 2000
+              },
+              grid: {
+                color: '#eef1f9'
+              }
+            }
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
