@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriScan - Analysis</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            padding: 20px;
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        .app-container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            padding: 20px 0;
+            min-height: 100vh;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            padding: 0 20px 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .back-btn {
+            font-size: 24px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            margin-right: 15px;
+            color: #666;
+        }
+
+        .header-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .nav-tabs {
+            display: flex;
+            border-bottom: 1px solid #eee;
+        }
+
+        .tab {
+            flex: 1;
+            text-align: center;
+            padding: 16px 0;
+            font-weight: 500;
+            cursor: pointer;
+            color: #666;
+            position: relative;
+        }
+
+        .tab.active {
+            color: #4CAF50;
+        }
+
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 20%;
+            width: 60%;
+            height: 3px;
+            background: #4CAF50;
+        }
+
+        .nutrition-summary {
+            padding: 20px;
+        }
+
+        .date-selector {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .date-btn {
+            background: #f0f0f0;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            margin: 0 5px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .date-btn.active {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .summary-card {
+            background: #f9f9f9;
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .card-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #333;
+            margin: 8px 0;
+        }
+
+        .card-label {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .progress-container {
+            background: #f0f0f0;
+            border-radius: 10px;
+            height: 8px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: #4CAF50;
+            width: 65%;
+        }
+
+        .progress-bar.protein {
+            background: #FF9800;
+            width: 40%;
+        }
+
+        .progress-bar.carbs {
+            background: #2196F3;
+            width: 80%;
+        }
+
+        .progress-bar.fat {
+            background: #F44336;
+            width: 30%;
+        }
+
+        .meal-section {
+            padding: 0 20px;
+        }
+
+        .meal-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 20px 0 10px;
+        }
+
+        .meal-name {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .meal-time {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .food-item {
+            background: #f9f9f9;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .food-name {
+            font-weight: 500;
+        }
+
+        .food-nutrients {
+            text-align: right;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .footer {
+            height: 70px;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <button class="back-btn" onclick="window.location.href='home_screen.html'">←</button>
+            <div class="header-title">Analysis</div>
+        </header>
+
+        <div class="nav-tabs">
+            <div class="tab active">Nutrition</div>
+            <div class="tab">Foods</div>
+            <div class="tab">Trends</div>
+        </div>
+
+        <div class="nutrition-summary">
+            <div class="date-selector">
+                <button class="date-btn">Sun</button>
+                <button class="date-btn">Mon</button>
+                <button class="date-btn">Tue</button>
+                <button class="date-btn active">Wed</button>
+                <button class="date-btn">Thu</button>
+                <button class="date-btn">Fri</button>
+                <button class="date-btn">Sat</button>
+            </div>
+
+            <div class="summary-cards">
+                <div class="summary-card">
+                    <div class="card-label">Calories</div>
+                    <div class="card-value">2,145</div>
+                    <div class="card-label">/ 2,200</div>
+                    <div class="progress-container">
+                        <div class="progress-bar"></div>
+                    </div>
+                </div>
+                
+                <div class="summary-card">
+                    <div class="card-label">Protein</div>
+                    <div class="card-value">78g</div>
+                    <div class="card-label">/ 120g</div>
+                    <div class="progress-container">
+                        <div class="progress-bar protein"></div>
+                    </div>
+                </div>
+                
+                <div class="summary-card">
+                    <div class="card-label">Carbs</div>
+                    <div class="card-value">210g</div>
+                    <div class="card-label">/ 275g</div>
+                    <div class="progress-container">
+                        <div class="progress-bar carbs"></div>
+                    </div>
+                </div>
+                
+                <div class="summary-card">
+                    <div class="card-label">Fat</div>
+                    <div class="card-value">85g</div>
+                    <div class="card-label">/ 70g</div>
+                    <div class="progress-container">
+                        <div class="progress-bar fat"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="meal-section">
+            <div class="meal-title">
+                <div class="meal-name">Breakfast</div>
+                <div class="meal-time">8:30 AM</div>
+            </div>
+            
+            <div class="food-item">
+                <div class="food-name">Oatmeal with berries</div>
+                <div class="food-nutrients">
+                    <div>320 cal</div>
+                    <div>12g protein</div>
+                </div>
+            </div>
+            
+            <div class="meal-title">
+                <div class="meal-name">Lunch</div>
+                <div class="meal-time">1:15 PM</div>
+            </div>
+            
+            <div class="food-item">
+                <div class="food-name">Chicken Salad</div>
+                <div class="food-nutrients">
+                    <div>450 cal</div>
+                    <div>35g protein</div>
+                </div>
+            </div>
+            
+            <div class="food-item">
+                <div class="food-name">Apple</div>
+                <div class="food-nutrients">
+                    <div>80 cal</div>
+                    <div>0g protein</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer"></div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriScan - Home</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            padding: 20px;
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        .app-container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            padding: 24px;
+            min-height: 100vh;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: #4CAF50;
+        }
+
+        .settings-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            transition: background-color 0.2s;
+        }
+        
+        .settings-btn:hover {
+            background-color: #f0f0f0;
+        }
+
+        .main-content {
+            padding: 30px 0;
+            text-align: center;
+        }
+
+        .scan-btn {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4CAF50, #2E7D32);
+            color: white;
+            border: none;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 30px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 20px rgba(76, 175, 80, 0.3);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .scan-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(76, 175, 80, 0.4);
+        }
+
+        .scan-btn i {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .recent-scan {
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 12px;
+            margin-top: 30px;
+        }
+
+        .recent-scan h3 {
+            color: #4CAF50;
+            margin-bottom: 15px;
+        }
+
+        .food-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .food-item:last-child {
+            border-bottom: none;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .menu-item {
+            background: #f0f9ff;
+            border: 1px solid #d1e7f0;
+            border-radius: 12px;
+            padding: 20px 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.2s;
+        }
+
+        .menu-item:hover {
+            background: #e1f0fa;
+            transform: translateY(-3px);
+        }
+
+        .menu-icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .menu-title {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .analysis-btn {
+            margin-top: 20px;
+            padding: 12px 24px;
+            background: #E8F5E9;
+            color: #4CAF50;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <div class="logo">NutriScan</div>
+            <a href="settings_screen.html" class="settings-btn">⚙️</a>
+        </header>
+
+        <div class="main-content">
+            <h1>Scan your food</h1>
+            <p>Take a photo of your food to analyze its nutrition</p>
+            
+            <button class="scan-btn">
+                <div>
+                    <span>📸</span>
+                    <br>
+                    SCAN
+                </div>
+            </button>
+            
+            <div class="recent-scan">
+                <h3>Recent Scan</h3>
+                <div class="food-item">
+                    <span>Mac and Cheese</span>
+                    <span>2 hours ago</span>
+                </div>
+            </div>
+            
+            <div class="menu-grid">
+                <a href="nutrition_summary.html" class="menu-item">
+                    <div class="menu-icon">📊</div>
+                    <div class="menu-title">Nutrition Summary</div>
+                </a>
+                <a href="carbs_health_score.html" class="menu-item">
+                    <div class="menu-icon">🔢</div>
+                    <div class="menu-title">Carbs Health Score</div>
+                </a>
+                <a href="protein_trends.html" class="menu-item">
+                    <div class="menu-icon">📈</div>
+                    <div class="menu-title">Protein Trends</div>
+                </a>
+                <a href="top_foods_list.html" class="menu-item">
+                    <div class="menu-icon">🍽️</div>
+                    <div class="menu-title">Top Foods List</div>
+                </a>
+            </div>
+            
+            <button class="analysis-btn">View Analysis</button>
+        </div>
+    </div>
+</body>
+</html>

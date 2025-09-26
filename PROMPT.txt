@@ -1,0 +1,11 @@
+Please design an UI in single file HTML to build an UI. Please design a nice, modern and good UI based on this each image. Please named a html file based on the image name
+
+Please design an UI in single file HTML to build an UI. Please design a nice, modern and good UI based on this image I provide
+
+website kimi.com
+qwen cli
+kilocode index codebase
+
+Please design an UI in single file HTML to build an UI. Please design a nice, modern and good UI based on this image I provide
+
+Based on this image, build for me a single HTML file layout. Make a modern design, smooth and intuitive design layout based on the image. Named it "dashboard.html"

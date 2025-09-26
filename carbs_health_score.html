@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriScan - Analysis</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            padding: 20px;
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        .app-container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            padding: 20px 0;
+            min-height: 100vh;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            padding: 0 20px 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .back-btn {
+            font-size: 24px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            margin-right: 15px;
+            color: #666;
+        }
+
+        .header-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .nav-tabs {
+            display: flex;
+            border-bottom: 1px solid #eee;
+        }
+
+        .tab {
+            flex: 1;
+            text-align: center;
+            padding: 16px 0;
+            font-weight: 500;
+            cursor: pointer;
+            color: #666;
+            position: relative;
+        }
+
+        .tab.active {
+            color: #4CAF50;
+        }
+
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 20%;
+            width: 60%;
+            height: 3px;
+            background: #4CAF50;
+        }
+
+        .health-score-section {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .score-display {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            background: #E8F5E9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            position: relative;
+        }
+
+        .score-value {
+            font-size: 36px;
+            font-weight: 700;
+            color: #4CAF50;
+        }
+
+        .score-label {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .health-insight {
+            background: #f9f9f9;
+            border-radius: 12px;
+            padding: 16px;
+            margin: 20px 0;
+        }
+
+        .insight-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+
+        .insight-icon {
+            margin-right: 8px;
+        }
+
+        .insight-desc {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .carbs-trend {
+            margin-top: 20px;
+            padding: 20px;
+        }
+
+        .trend-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .trend-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .trend-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #2196F3;
+        }
+
+        .trend-chart {
+            height: 200px;
+            display: flex;
+            align-items: flex-end;
+            padding: 20px 0;
+            position: relative;
+        }
+
+        .chart-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            display: flex;
+            border-bottom: 1px solid #eee;
+        }
+
+        .grid-line {
+            flex: 1;
+            border-right: 1px solid #eee;
+        }
+
+        .grid-line:last-child {
+            border-right: none;
+        }
+
+        .chart-bars {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            height: 100%;
+            width: 100%;
+        }
+
+        .bar {
+            width: 30px;
+            background: #2196F3;
+            border-radius: 4px 4px 0 0;
+            position: relative;
+        }
+
+        .bar-label {
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            color: #666;
+        }
+
+        .bar-value {
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .bar-1 { height: 80%; }
+        .bar-2 { height: 70%; }
+        .bar-3 { height: 90%; }
+        .bar-4 { height: 60%; }
+        .bar-5 { height: 85%; }
+        .bar-6 { height: 75%; }
+        .bar-7 { height: 95%; }
+
+        .time-filter {
+            display: flex;
+            justify-content: center;
+            margin: 10px 0 20px;
+        }
+
+        .filter-btn {
+            background: #f0f0f0;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            margin: 0 5px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .filter-btn.active {
+            background: #2196F3;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <button class="back-btn" onclick="window.location.href='home_screen.html'">←</button>
+            <div class="header-title">Analysis</div>
+        </header>
+
+        <div class="nav-tabs">
+            <div class="tab">Nutrition</div>
+            <div class="tab">Foods</div>
+            <div class="tab active">Trends</div>
+        </div>
+
+        <div class="health-score-section">
+            <div class="score-display">
+                <div class="score-value">86</div>
+            </div>
+            <div class="score-label">HEALTH SCORE</div>
+            
+            <div class="health-insight">
+                <div class="insight-title">
+                    <span class="insight-icon">💡</span>
+                    Keep up the good work!
+                </div>
+                <div class="insight-desc">Your overall nutrition is well balanced with consistent protein and moderate carb intake.</div>
+            </div>
+        </div>
+
+        <div class="carbs-trend">
+            <div class="trend-header">
+                <div class="trend-title">CARBS</div>
+                <div class="trend-value">210g</div>
+            </div>
+
+            <div class="time-filter">
+                <button class="filter-btn">Week</button>
+                <button class="filter-btn active">Month</button>
+                <button class="filter-btn">3M</button>
+                <button class="filter-btn">6M</button>
+            </div>
+
+            <div class="trend-chart">
+                <div class="chart-grid">
+                    <div class="grid-line"></div>
+                    <div class="grid-line"></div>
+                    <div class="grid-line"></div>
+                    <div class="grid-line"></div>
+                    <div class="grid-line"></div>
+                    <div class="grid-line"></div>
+                    <div class="grid-line"></div>
+                </div>
+                <div class="chart-bars">
+                    <div class="bar bar-1">
+                        <div class="bar-label">1</div>
+                        <div class="bar-value">180g</div>
+                    </div>
+                    <div class="bar bar-2">
+                        <div class="bar-label">2</div>
+                        <div class="bar-value">150g</div>
+                    </div>
+                    <div class="bar bar-3">
+                        <div class="bar-label">3</div>
+                        <div class="bar-value">220g</div>
+                    </div>
+                    <div class="bar bar-4">
+                        <div class="bar-label">4</div>
+                        <div class="bar-value">120g</div>
+                    </div>
+                    <div class="bar bar-5">
+                        <div class="bar-label">5</div>
+                        <div class="bar-value">190g</div>
+                    </div>
+                    <div class="bar bar-6">
+                        <div class="bar-label">6</div>
+                        <div class="bar-value">160g</div>
+                    </div>
+                    <div class="bar bar-7">
+                        <div class="bar-label">7</div>
+                        <div class="bar-value">230g</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

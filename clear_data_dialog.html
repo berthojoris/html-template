@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clear Data Confirmation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background-color: rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .dialog {
+            background: white;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 400px;
+            padding: 24px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .dialog-icon {
+            font-size: 48px;
+            margin: 20px 0;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 16px;
+        }
+
+        p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 14px 20px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .btn-cancel {
+            background: #f1f1f1;
+            color: #666;
+        }
+
+        .btn-confirm {
+            background: #FF5252;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="dialog">
+        <div class="dialog-icon">🗑️</div>
+        <h2>Clear all data?</h2>
+        <p>This will permanently remove all your scan history and analysis. This action cannot be undone.</p>
+        
+        <div class="btn-group">
+            <button class="btn btn-cancel">Cancel</button>
+            <button class="btn btn-confirm">Clear Data</button>
+        </div>
+    </div>
+</body>
+</html>

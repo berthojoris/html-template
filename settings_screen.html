@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriScan - Settings</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            padding: 20px;
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        .app-container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            padding: 20px 0;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            padding: 0 20px 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .back-btn {
+            font-size: 24px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            margin-right: 15px;
+            color: #666;
+        }
+
+        .header-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .settings-menu {
+            padding: 10px 0;
+        }
+
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .setting-item:last-child {
+            border-bottom: none;
+        }
+
+        .setting-label {
+            display: flex;
+            align-items: center;
+        }
+
+        .icon {
+            margin-right: 15px;
+            font-size: 20px;
+        }
+
+        .setting-name {
+            font-weight: 500;
+        }
+
+        .setting-value {
+            color: #888;
+            font-size: 14px;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #4CAF50;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .danger-zone {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .danger-btn {
+            width: 100%;
+            padding: 16px;
+            background: #FFEBEE;
+            color: #F44336;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <button class="back-btn" onclick="window.location.href='home_screen.html'">←</button>
+            <div class="header-title">Settings</div>
+        </header>
+
+        <div class="settings-menu">
+            <div class="setting-item">
+                <div class="setting-label">
+                    <span class="icon">🔔</span>
+                    <span class="setting-name">Notifications</span>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="setting-item">
+                <div class="setting-label">
+                    <span class="icon">📊</span>
+                    <span class="setting-name">Daily Nutrient Goals</span>
+                </div>
+            </div>
+
+            <div class="setting-item">
+                <div class="setting-label">
+                    <span class="icon">📊</span>
+                    <span class="setting-name">Weekly Reports</span>
+                </div>
+                <span class="setting-value">Wednesdays</span>
+            </div>
+
+            <div class="setting-item">
+                <div class="setting-label">
+                    <span class="icon">🔍</span>
+                    <span class="setting-name">Scan Quality</span>
+                </div>
+                <span class="setting-value">High</span>
+            </div>
+
+            <div class="setting-item">
+                <div class="setting-label">
+                    <span class="icon">🌍</span>
+                    <span class="setting-name">Language</span>
+                </div>
+                <span class="setting-value">English</span>
+            </div>
+
+            <div class="setting-item">
+                <div class="setting-label">
+                    <span class="icon">🔒</span>
+                    <span class="setting-name">Privacy</span>
+                </div>
+            </div>
+
+            <div class="setting-item">
+                <div class="setting-label">
+                    <span class="icon">❓</span>
+                    <span class="setting-name">Help & Support</span>
+                </div>
+            </div>
+
+            <div class="setting-item">
+                <div class="setting-label">
+                    <span class="icon">⭐</span>
+                    <span class="setting-name">Rate App</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="danger-zone">
+            <div class="setting-item">
+                <div class="setting-label">
+                    <span class="icon">🗑️</span>
+                    <span class="setting-name">Clear All Data</span>
+                </div>
+            </div>
+            <button class="danger-btn">Clear All Data</button>
+        </div>
+    </div>
+</body>
+</html>
